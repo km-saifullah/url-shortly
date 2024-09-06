@@ -3,14 +3,21 @@ import generateShortUrl from '../utils/generateShortUrl.js'
 
 const getUrls = async (req, res) => {
   const data = await Url.find()
-  res.render('index', { data })
+  console.log(data)
+  let link = req.protocol + '://' + req.headers.host
+  res.render('index', { data: data, link: link })
 }
 
 const createUrl = async (req, res) => {
   const { mainUrl } = req.body
   const shortUrl = generateShortUrl()
-  await Url.create({ mainUrl, shortUrl })
-  res.render('index')
+  const data = await Url.create({ mainUrl, shortUrl })
+  let link = req.protocol + '://' + req.headers.host
+  console.log(Array.isArray(data))
+  res.render('index', {
+    data: data,
+    link: link,
+  })
 }
 
 // redirect to the main url

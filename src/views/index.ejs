@@ -1,51 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="<%= link %>/css/output.css" />
     <title>URL Shortly</title>
   </head>
   <body>
-    <div>
-      <h1>URL Shortly</h1>
-    </div>
-    <div>
-      <form action="/url" method="POST">
-        <input
-          type="text"
-          placeholder="Enter your url"
-          name="mainUrl"
-          id="mainUrl"
-        />
-        <button id="btn" type="submit">Generate Short URL</button>
-      </form>
-    </div>
-    <div>
-      <% if(locals.data) { %>
-      <table border="1" style="border-collapse: collapse;">
-        <tr>
-          <th>Seriral</th>
-          <th>Main URL</th>
-          <th>Short URL</th>
-          <th>Count</th>
-        </tr>
-        <% data.forEach(function(url,index){ %>
-        <tr>
-          <td><%= index++ %></td>
-          <td><%= url.mainUrl %></td>
-          <td>
-            <a
-              href="http://localhost:8000/url/<%= url.shortUrl %>"
-              target="_blank"
-            >
-              <%= url.shortUrl %>
-            </a>
-          </td>
-          <td><%= url.count %></td>
-        </tr>
-        <% }) %>
-      </table>
-      <% } %>
+    <div class="flex items-center justify-center flex-col py-12">
+      <div>
+        <h1 class="text-2xl text-[#009DE4] font-medium text-center">
+          Paste Your URL to the input field
+        </h1>
+      </div>
+      <div
+        class="w-[80%] flex items-center justify-center flex-col drop-shadow-sm"
+      >
+        <div class="py-5">
+          <form action="/url" method="POST">
+            <div class="flex items-center gap-3">
+              <input
+                type="text"
+                name="mainUrl"
+                placeholder="Enter your url"
+                class="input input-bordered input-info w-full max-w-xs"
+              />
+              <button class="btn btn-info text-white font-medium" type="submit">
+                Generate Short URL
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="overflow-x-auto">
+          <% if(locals.data.length > 0) { %>
+          <table class="table">
+            <tr class="bg-[#009DE4] text-xl text-[#222222]">
+              <th class="border">Seriral</th>
+              <th class="border">Main URL</th>
+              <th class="border">Short URL</th>
+              <th class="border">Count</th>
+            </tr>
+            <% data.forEach(function(url,index){ %>
+            <tr class="border">
+              <td><%= index++ %></td>
+              <td><%= url.mainUrl %></td>
+              <td class="border bg-base-200 text-[#222222] underline">
+                <a
+                  href="http://localhost:8000/url/<%= url.shortUrl %>"
+                  target="_blank"
+                >
+                  <%= url.shortUrl %>
+                </a>
+              </td>
+              <td><%= url.count %></td>
+            </tr>
+            <% }); %>
+          </table>
+          <% } else { %>
+          <p>
+            Your Sort URL generated successfully
+            <a href="http://localhost:8000/url">click here</a>
+          </p>
+          <% } %>
+        </div>
+      </div>
     </div>
   </body>
 </html>
