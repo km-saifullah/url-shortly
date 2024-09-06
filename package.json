@@ -1,0 +1,34 @@
+{
+  "name": "url-shortner",
+  "version": "1.0.0",
+  "description": "An application to make giant url into a short url",
+  "main": "./src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch ./src/server.js",
+    "start": "node ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/km-saifullah/url-shortly.git"
+  },
+  "keywords": [
+    "short",
+    "url",
+    "node.js",
+    "express.js",
+    "mongoDB"
+  ],
+  "author": "Khaled Md Saifullah",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/km-saifullah/url-shortly/issues"
+  },
+  "homepage": "https://github.com/km-saifullah/url-shortly#readme",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.6.1",
+    "quick-app": "^1.0.4"
+  }
+}
