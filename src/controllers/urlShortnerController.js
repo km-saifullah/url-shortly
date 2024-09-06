@@ -1,9 +1,23 @@
 import Url from '../models/urlShortnerModel.js'
+import generateShortUrl from '../utils/generateShortUrl.js'
 
-const getUrls = (req, res) => {}
-
-const createUrl = (req, res) => {
-  const { mainUrl, shortUrl } = req.body
+const getUrls = async (req, res) => {
+  const data = await Url.find()
+  res.render('index', { data })
 }
 
-export { getUrls, createUrl }
+const createUrl = async (req, res) => {
+  const { mainUrl } = req.body
+  const shortUrl = generateShortUrl()
+  await Url.create({ mainUrl, shortUrl })
+  res.render('index')
+}
+
+// redirect to the main url
+const redirectUrl = async (req, res) => {
+  const { shortUrl } = req.params
+  const url = await Url.findOne({ shortUrl })
+  res.redirect(url.mainUrl)
+}
+
+export { getUrls, createUrl, redirectUrl }

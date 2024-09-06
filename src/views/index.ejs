@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortly</title>
+  </head>
+  <body>
+    <div>
+      <h1>URL Shortly</h1>
+    </div>
+    <div>
+      <form action="/url" method="POST">
+        <input
+          type="text"
+          placeholder="Enter your url"
+          name="mainUrl"
+          id="mainUrl"
+        />
+        <button id="btn" type="submit">Generate Short URL</button>
+      </form>
+    </div>
+    <div>
+      <% if(locals.data) { %>
+      <table border="1" style="border-collapse: collapse;">
+        <tr>
+          <th>Seriral</th>
+          <th>Main URL</th>
+          <th>Short URL</th>
+          <th>Count</th>
+        </tr>
+        <% data.forEach(function(url,index){ %>
+        <tr>
+          <td><%= index++ %></td>
+          <td><%= url.mainUrl %></td>
+          <td>
+            <a
+              href="http://localhost:8000/url/<%= url.shortUrl %>"
+              target="_blank"
+            >
+              <%= url.shortUrl %>
+            </a>
+          </td>
+          <td><%= url.count %></td>
+        </tr>
+        <% }) %>
+      </table>
+      <% } %>
+    </div>
+  </body>
+</html>

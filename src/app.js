@@ -1,5 +1,11 @@
 import express from 'express'
 import urlRouter from './routes/urlShortnerRoutes.js'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+// Convert `import.meta.url` to __dirname
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express()
 
@@ -7,7 +13,11 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// views setup
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
+
 // routes
-app.use('/api/v1/url', urlRouter)
+app.use('/url', urlRouter)
 
 export default app
