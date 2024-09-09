@@ -3,7 +3,6 @@ import generateShortUrl from '../utils/generateShortUrl.js'
 
 const getUrls = async (req, res) => {
   const data = await Url.find()
-  console.log(data)
   let link = req.protocol + '://' + req.headers.host
   res.render('index', { data: data, link: link })
 }
@@ -13,7 +12,6 @@ const createUrl = async (req, res) => {
   const shortUrl = generateShortUrl()
   const data = await Url.create({ mainUrl, shortUrl })
   let link = req.protocol + '://' + req.headers.host
-  console.log(Array.isArray(data))
   res.render('index', {
     data: data,
     link: link,
@@ -24,6 +22,11 @@ const createUrl = async (req, res) => {
 const redirectUrl = async (req, res) => {
   const { shortUrl } = req.params
   const url = await Url.findOne({ shortUrl })
+  await Url.findOneAndUpdate(
+    { shortUrl: shortUrl },
+    { $inc: { count: 1 } },
+    { new: true }
+  )
   res.redirect(url.mainUrl)
 }
 
